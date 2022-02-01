@@ -14,9 +14,9 @@ RUN pip install --upgrade setuptools
 RUN pip install pybind11
 RUN pip install Cython
 RUN pip install h5py==3.1.0
-#RUN wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v2.4.0/tensorflow-2.4.0-cp37-none-linux_armv7l.whl -q --show-progress
-COPY . .
+RUN wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v2.4.0/tensorflow-2.4.0-cp37-none-linux_armv7l.whl -q --show-progress
 RUN pip3 install tensorflow-2.4.0-cp37-none-linux_armv7l.whl
 RUN pip install -r requirements.txt
+COPY . .
 
 CMD ["python","-u","server.py"]

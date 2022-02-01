@@ -1,6 +1,6 @@
 version: "3"
 services:
-  node01:
+  client:
     build:
       dockerfile: Dockerfile
       context: .
@@ -10,7 +10,7 @@ services:
       - ../data:/app/data
       - ../data:/app/Models
 
-  # node02:
+  # newClinet:
   #   build:
   #     dockerfile: Dockerfile
   #     context: .
