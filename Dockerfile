@@ -19,4 +19,4 @@ RUN pip3 install tensorflow-2.4.0-cp37-none-linux_armv7l.whl
 RUN pip install -r requirements.txt
 COPY . .
 
-CMD ["python","-u","server.py"]
+CMD ["python","-u","client.py"]

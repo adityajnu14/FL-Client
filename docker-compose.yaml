@@ -7,8 +7,8 @@ services:
     ports:
       - "8081:8080"
     volumes:
-      - ../data:/app/data
-      - ../data:/app/Models
+      - ./data:/app/data
+      - ./data:/app/Models
 
   # newClinet:
   #   build:
