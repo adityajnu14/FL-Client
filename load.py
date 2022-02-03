@@ -7,49 +7,27 @@ with warnings.catch_warnings():
     from tensorflow.keras.layers import Activation, Dense
     from tensorflow.keras import backend as K
 
-
-# #Fetech locally saved(Device level) model
-# def init():
-    
-#     K.clear_session()
-#     model = load_model('Models/model.h5')
-#     model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
-#     return model
-
-# #Create and initilize model for first time. 
-# def freshModel():
-#     K.clear_session()
-#     model = Sequential([
-#         Dense(units=2, input_shape=(4, ), activation='relu'),
-#         #Dense(units=8,  activation='relu'),
-#         Dense(units=1, activation='sigmoid')
-#     ])
-
-#     model.compile(optimizer="sgd", loss="binary_crossentropy", metrics=["accuracy"])
-#     model.save('Models/InitModel.h5')
-
-
 #Fetech locally saved(Device level) model
-def init():
+def fetchModel():
     
     K.clear_session()
     model = load_model('Models/model.h5')
-    model.compile(optimizer='adam', loss=tf.keras.losses.CategoricalCrossentropy(), metrics=['accuracy'])
+    # model.compile(optimizer='adam', loss=tf.keras.losses.CategoricalCrossentropy(), metrics=['accuracy'])
     return model
 
 #Create and initilize model for first time. 
-def freshModel():
-    K.clear_session()
+# def modelForANN():
+#     K.clear_session()
 
-    model = tf.keras.Sequential()
-    model.add(tf.keras.layers.Dense(64, activation='relu', input_shape=(512,)))
-    #model.add(tf.keras.layers.Dense(64, activation='relu'))
-    #model.add(tf.keras.layers.Dense(32, activation='relu'))
-    model.add(tf.keras.layers.Dense(8, activation='sigmoid'))
+#     model = tf.keras.Sequential()
+#     model.add(tf.keras.layers.Dense(64, activation='relu', input_shape=(512,)))
+#     #model.add(tf.keras.layers.Dense(64, activation='relu'))
+#     #model.add(tf.keras.layers.Dense(32, activation='relu'))
+#     model.add(tf.keras.layers.Dense(8, activation='sigmoid'))
 
 
-    model.compile(optimizer='adam', loss=tf.keras.losses.CategoricalCrossentropy(), metrics=['accuracy'])
+#     model.compile(optimizer='adam', loss=tf.keras.losses.CategoricalCrossentropy(), metrics=['accuracy'])
 
-    model.save('Models/InitModel.h5')
+#     model.save('Models/InitModel.h5')
 
 

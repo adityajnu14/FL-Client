@@ -28,7 +28,7 @@ server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
 functions_pb2_grpc.add_FederatedAppServicer_to_server(FederatedAppServicer(), server)
 
-print("Ready for server request on PORT: 8080")
+print("Ready for server request")
 # server.add_insecure_port('[::]:8080')
 server.add_insecure_port('0.0.0.0:8080')
 server.start()
