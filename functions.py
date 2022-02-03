@@ -6,12 +6,6 @@ import base64
 import os
 from tensorflow.keras.utils import to_categorical
 
-
-
-'''
-    This function stores(send) latest model to respective folder.
-    It works as model transfer machanism for various participating devices. 
-'''
 def SendModel(modelString):
 
     try:
@@ -59,7 +53,6 @@ def Train():
     y = data.iloc[currentIndex:nextIndex,-1].values
     y = to_categorical(y)
 
-    #print("Dimension of current data ", X.shape)
 
     #Updating Index
     if nextIndex == totalRowCount:
