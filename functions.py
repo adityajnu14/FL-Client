@@ -37,58 +37,62 @@ def Train():
     print("Starting training...")
 
     continousTrainingBatchSize = 60
-    
     #Reading index to simulate continous learning
     currentIndex = 0
-    with open('data/indexFile.txt', "r+") as f:
-        fileIndex = json.load(f)
-        currentIndex = fileIndex['index']
+    try :
 
-    print("Current Index is ", currentIndex)
+        with open('data/indexFile.txt', "r+") as f:
+            fileIndex = json.load(f)
+            currentIndex = fileIndex['index']
 
-    data = pd.read_csv('data/data.csv')
-    totalRowCount = data.shape[0]
-    nextIndex = currentIndex + continousTrainingBatchSize if currentIndex + continousTrainingBatchSize < totalRowCount else totalRowCount
+        print("Current Index is ", currentIndex)
 
-
-    X = data.iloc[currentIndex:nextIndex,1:-1].values
-    y = data.iloc[currentIndex:nextIndex,-1].values
-    y = to_categorical(y)
+        data = pd.read_csv('data/data.csv', on_bad_lines='skip')
+        totalRowCount = data.shape[0]
+        nextIndex = currentIndex + continousTrainingBatchSize if currentIndex + continousTrainingBatchSize < totalRowCount else totalRowCount
 
 
-    #Updating Index
-    if nextIndex == totalRowCount:
-        nextIndex = 0
-    with open('data/indexFile.txt', "w") as f: 
-        index = {'index' : nextIndex}
-        f.write(json.dumps(index))
+        X = data.iloc[currentIndex:nextIndex,1:-1].values
+        y = data.iloc[currentIndex:nextIndex,-1].values
+        y = to_categorical(y)
 
-    #get latest model from own directory
-    model = fetchModel()
-    #model.summary()
 
-    #Printing aggregated global model metrics
-    score = model.evaluate(X, y, verbose=0)
-    print("Global model loss : {} Global model accuracy : {}".format(score[0], score[1]))
-    
-    saveLearntMetrice('data/metrics.txt', score)
-    
+        #Updating Index
+        if nextIndex == totalRowCount:
+            nextIndex = 0
+        with open('data/indexFile.txt', "w") as f: 
+            index = {'index' : nextIndex}
+            f.write(json.dumps(index))
 
-    model.fit(X, y, epochs=16, verbose=0)
-           
-    #Printing loss and accuracy after training 
-    score = model.evaluate(X, y, verbose=0)
-    print("Local model loss : {} Local model accuracy : {}".format(score[0], score[1]))
-    
-    saveLearntMetrice('data/localMetrics.txt', score)
+        #get latest model from own directory
+        model = fetchModel()
+        #model.summary()
 
-    #Save current model 
-    model.save('Models/model.h5')
-    with open('Models/model.h5','rb') as file:
-        encoded_string = base64.b64encode(file.read())
-    
-    return encoded_string
+        #Printing aggregated global model metrics
+        score = model.evaluate(X, y, verbose=0)
+        print("Global model loss : {} Global model accuracy : {}".format(score[0], score[1]))
+        
+        saveLearntMetrice('data/metrics.txt', score)
+        
 
+        model.fit(X, y, epochs=16, verbose=0)
+            
+        #Printing loss and accuracy after training 
+        score = model.evaluate(X, y, verbose=0)
+        print("Local model loss : {} Local model accuracy : {}".format(score[0], score[1]))
+        
+        saveLearntMetrice('data/localMetrics.txt', score)
+
+        #Save current model 
+        model.save('Models/model.h5')
+        with open('Models/model.h5','rb') as file:
+            encoded_string = base64.b64encode(file.read())
+        
+        return encoded_string
+    except Exception as e:
+        print(e)
+        print("An error occured!")
+        return 0
 def initilizeDevice():
 
     metric = {'accuracy' : [], 'loss' : []}
