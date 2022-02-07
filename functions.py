@@ -1,3 +1,5 @@
+from inspect import GEN_CLOSED
+from json.tool import main
 import pandas as pd
 import numpy as np
 import json
@@ -12,11 +14,11 @@ def SendModel(modelString):
         with open("Models/model.h5","wb") as file:
             file.write(base64.b64decode(modelString))
             print("Successfully saved model...")
-            return 1
+            return 0
     except Exception as e:
         print(e)
         print("An error occured!")
-        return 0
+        return 1
 
 def saveLearntMetrice(file_name,score):
 
@@ -105,3 +107,4 @@ def GenerateData():
     initilizeDevice()
     print("Devices initilization done")
     return 0
+    
